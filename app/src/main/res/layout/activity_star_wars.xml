@@ -1,40 +1,53 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@android:color/black"
-              android:orientation="vertical"
-              tools:context=".StarWarsActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-            android:layout_marginTop="40dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/alongtimeago"/>
+    <data>
 
-    <ImageView
-            android:id="@+id/asw_btn_star_wars_logo"
-            android:layout_marginTop="40dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/star_wars_logo"/>
+        <variable
+                name="data"
+                type="com.academy.android.starwarsdatabinding.StarWarsViewModel"/>
+    </data>
 
-    <TextView
-            android:id="@+id/asw_tv_episode"
-            android:gravity="center"
-            tools:text="Episode IV"
-            android:textColor="#E5B13A"
-            android:textSize="30sp"
-            android:layout_marginTop="40dp"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:orientation="vertical"
+            tools:context=".StarWarsActivity">
 
-    <TextView
-            android:id="@+id/asw_tv_crawl"
-            android:gravity="center"
-            tools:text="It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire"
-            android:textSize="30sp"
-            android:textColor="#E5B13A"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-</LinearLayout>
+        <ImageView
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/alongtimeago"/>
+
+        <ImageView
+                android:id="@+id/asw_btn_star_wars_logo"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{data.onLogoClicked}"
+                android:src="@drawable/star_wars_logo"/>
+
+        <TextView
+                android:id="@+id/asw_tv_episode"
+                android:gravity="center"
+                android:text="@{data.episode}"
+                tools:text="Episode IV"
+                android:textColor="#E5B13A"
+                android:textSize="30sp"
+                android:layout_marginTop="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/asw_tv_crawl"
+                android:gravity="center"
+                android:text="@{data.crawl}"
+                tools:text="It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire"
+                android:textSize="30sp"
+                android:textColor="#E5B13A"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </LinearLayout>
+</layout>

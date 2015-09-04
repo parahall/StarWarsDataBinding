@@ -41,7 +41,7 @@ public class CrawlLoader {
                                     OpeningCrawl openingCrawl = new OpeningCrawl(episode, crawl);
                                     onLoadFinishListener.onLoadFinish(openingCrawl);
                                     try {
-                                        Thread.sleep(7000);
+                                        Thread.sleep(5000);
                                     } catch (InterruptedException e) {
                                         break;
                                     }

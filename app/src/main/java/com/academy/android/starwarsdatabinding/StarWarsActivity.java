@@ -1,76 +1,62 @@
 package com.academy.android.starwarsdatabinding;
 
+import com.academy.android.starwarsdatabinding.databinding.ActivityStarWarsBinding;
+
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class StarWarsActivity extends AppCompatActivity
-        implements View.OnClickListener, CrawlLoader.IOnLoadFinishListener {
+        implements StarWarsViewModel.StarWasViewModelListener {
 
-    private TextView mEpisodeTextView;
-
-    private TextView mCrawlTextView;
-
-    private CrawlLoader mCrawlLoader;
+    private StarWarsViewModel mViewModel;
 
     private Animation mCrawlAnimation;
 
-    private boolean isCrawlsNotRunning = true;
+    private TextView animatedText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_star_wars);
-
-        findViewById(R.id.asw_btn_star_wars_logo).setOnClickListener(this);
-
-        mEpisodeTextView = (TextView) findViewById(R.id.asw_tv_episode);
-        mCrawlTextView = (TextView) findViewById(R.id.asw_tv_crawl);
+        ActivityStarWarsBinding binding = DataBindingUtil
+                .setContentView(this, R.layout.activity_star_wars);
+        mViewModel = new StarWarsViewModel(this, getAssets());
+        binding.setData(mViewModel);
+        animatedText = (TextView) findViewById(R.id.asw_tv_crawl);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (mCrawlLoader != null) {
-            mCrawlLoader.stopCrawlLoader();
+        mViewModel.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewModel.onDestroy();
+        if (isFinishing()) {
+            mViewModel = null;
         }
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.asw_btn_star_wars_logo:
-                startCrawls();
-                break;
-        }
+    public void showToast() {
+        Toast.makeText(this, "Patience you must have my young padawan",
+                Toast.LENGTH_LONG)
+                .show();
     }
 
-    private void startCrawls() {
-        if (isCrawlsNotRunning) {
-            isCrawlsNotRunning = false;
+    @Override
+    public void playAnimation() {
+        if (mCrawlAnimation == null) {
             mCrawlAnimation = AnimationUtils.loadAnimation(this, R.anim.crawl_animations);
-            mCrawlLoader = new CrawlLoader(getAssets());
-            mCrawlLoader.startLoading(this);
-        } else {
-            Toast.makeText(this, "Patience you must have my young padawan", Toast.LENGTH_LONG)
-                    .show();
         }
-    }
-
-    @Override
-    public void onLoadFinish(final OpeningCrawl openingCrawl) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mEpisodeTextView.setText(openingCrawl.getEpisode());
-                mCrawlTextView.setText(openingCrawl.getCrawl());
-                mCrawlTextView.startAnimation(mCrawlAnimation);
-            }
-        });
+        animatedText.startAnimation(mCrawlAnimation);
     }
 }
