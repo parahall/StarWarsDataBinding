@@ -76,4 +76,7 @@ public class CrawlLoader {
 
         void onLoadFinish(OpeningCrawl openingCrawls);
     }
+
+
+
 }

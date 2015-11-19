@@ -31,6 +31,11 @@ public class StarWarsViewModel implements CrawlLoader.IOnLoadFinishListener {
 
     }
 
+    public void onDestroy() {
+        mView = null;
+    }
+
+
     public void onLogoClicked(View view) {
         startCrawls();
     }
@@ -64,9 +69,6 @@ public class StarWarsViewModel implements CrawlLoader.IOnLoadFinishListener {
         }
     }
 
-    public void onDestroy() {
-        mView = null;
-    }
 
     public interface StarWasViewModelListener {
 

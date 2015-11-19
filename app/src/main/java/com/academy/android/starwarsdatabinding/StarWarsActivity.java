@@ -1,5 +1,6 @@
 package com.academy.android.starwarsdatabinding;
 
+
 import com.academy.android.starwarsdatabinding.databinding.ActivityStarWarsBinding;
 
 import android.databinding.DataBindingUtil;
@@ -24,7 +25,7 @@ public class StarWarsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityStarWarsBinding binding = DataBindingUtil
-                .setContentView(this, R.layout.activity_star_wars);
+                .setContentView(this, R.layout.activity_star_wars) ;
         mViewModel = new StarWarsViewModel(this, getAssets());
         binding.setData(mViewModel);
         animatedText = (TextView) findViewById(R.id.asw_tv_crawl);
